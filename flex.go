@@ -1,8 +1,6 @@
 package cmproto
 
 import (
-	"fmt"
-
 	flex "buf.build/gen/go/cresplanex/types/protocolbuffers/go/cresplanex/flex/v1"
 	nullable "buf.build/gen/go/cresplanex/types/protocolbuffers/go/cresplanex/nullable/v1"
 )
@@ -215,7 +213,6 @@ func NewFlex(obj any) (*flex.Flex, error) {
 		}
 		flexBuilder.SetNullableMapValue(&flex.NullableFlexMap{HasValue: true, Value: mapBuilder})
 	default:
-		fmt.Printf("Unknown type: %T\n", v)
 		f, err := NewNullableFlex(obj)
 		if err != nil {
 			return nil, err
