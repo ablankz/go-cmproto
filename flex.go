@@ -172,6 +172,8 @@ func NewFlex(obj any) (*flex.Flex, error) {
 		flexBuilder.SetNullableFlexValue(&flex.NullableFlex{HasValue: false})
 	case string:
 		flexBuilder.SetNullableStringValue(&nullable.NullableString{HasValue: true, Value: v})
+	case int:
+		flexBuilder.SetNullableIntValue(&nullable.NullableInt32{HasValue: true, Value: int32(v)})
 	case int32:
 		flexBuilder.SetNullableIntValue(&nullable.NullableInt32{HasValue: true, Value: v})
 	case int64:
