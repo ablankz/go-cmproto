@@ -199,7 +199,9 @@ func NewFlex(obj any) (*flex.Flex, error) {
 		}
 		flexBuilder.SetNullableArrayValue(&flex.NullableFlexArray{HasValue: true, Value: arrayBuilder})
 	case map[string]any:
-		mapBuilder := &flex.FlexMap{}
+		mapBuilder := &flex.FlexMap{
+			Flex: make(map[string]*flex.Flex),
+		}
 		for k, val := range v {
 			f, err := NewFlex(val)
 			if err != nil {
@@ -242,7 +244,9 @@ func NewFlexArray(obj []any) (*flex.FlexArray, error) {
 }
 
 func NewFlexMap(obj map[string]any) (*flex.FlexMap, error) {
-	mapBuilder := &flex.FlexMap{}
+	mapBuilder := &flex.FlexMap{
+		Flex: make(map[string]*flex.Flex),
+	}
 	for k, val := range obj {
 		f, err := NewFlex(val)
 		if err != nil {
