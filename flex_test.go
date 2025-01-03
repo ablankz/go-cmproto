@@ -182,3 +182,53 @@ func TestFlex(t *testing.T) {
 		})
 	}
 }
+
+func TestFlexMap(t *testing.T) {
+	tests := []struct {
+		name  string
+		value map[string]any
+	}{
+		{
+			name:  "Empty map",
+			value: map[string]any{},
+		},
+		{
+			name:  "Simple map",
+			value: map[string]any{"key1": "value1", "key2": "value2"},
+		},
+		{
+			name: "Complex map",
+			value: map[string]any{
+				"MetricsBreakTime":     "10m",
+				"MetricsInterval":      "5s",
+				"RequestPerSlaveCount": int32(3000),
+				"SlaveCount":           int32(2),
+				"ThreadPerSlaveCount":  int32(50),
+				"slaveLists": []any{
+					map[string]any{
+						"address": "127.0.0.1",
+						"id":      "slave1",
+						"port":    int32(50051),
+						"uuid":    "b4a9297f-1651-4b37-9c2e-6d6223cd72ee",
+					},
+					map[string]any{
+						"address": "127.0.0.2",
+						"id":      "slave2",
+						"port":    int32(50051),
+						"uuid":    "69a82f87-99ab-49d6-a9d6-f4948fd10d09",
+					},
+				},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			flex, err := cmproto.NewFlexMap(tt.value)
+			assert.NoError(t, err)
+			result, err := cmproto.FromFlexMap(flex)
+			assert.NoError(t, err)
+			assert.Equal(t, tt.value, result)
+		})
+	}
+}
